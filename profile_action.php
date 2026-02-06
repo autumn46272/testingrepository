@@ -44,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($checkResult) {
             $update = $pdo->prepare("UPDATE users SET two_factor_secret = ? WHERE id = ?");
             $update->execute([$secret, $user_id]);
+            unset($_SESSION['pending_2fa_secret']); // Clear pending secret
             redirect('my_profile.php?success=' . urlencode('2FA enabled successfully') . '&tab=security');
         } else {
             redirect('my_profile.php?error=' . urlencode('Invalid verification code. Please try again.') . '&tab=security');

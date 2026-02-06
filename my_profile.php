@@ -67,15 +67,19 @@ $success = isset($_GET['success']) ? urldecode($_GET['success']) : '';
 $two_factor_enabled = false;
 $user_secret = null;
 
-// Check existing secret
+// Check existing secret (already enabled)
 $stmt_sec = $pdo->prepare("SELECT two_factor_secret FROM users WHERE id = ?");
 $stmt_sec->execute([$user_id]);
 $u_sec = $stmt_sec->fetch();
+
 if ($u_sec && !empty($u_sec['two_factor_secret'])) {
     $two_factor_enabled = true;
 } else {
-    // Generate a new secret for display (not saved until confirmed)
-    $secret = $ga->createSecret();
+    // Persistent secret during setup to avoid mismatch on refresh/error
+    if (!isset($_SESSION['pending_2fa_secret'])) {
+        $_SESSION['pending_2fa_secret'] = $ga->createSecret();
+    }
+    $secret = $_SESSION['pending_2fa_secret'];
     $qrCodeUrl = $ga->getQRCodeGoogleUrl($username, $secret, 'StudentDBSystem');
 }
 ?>
