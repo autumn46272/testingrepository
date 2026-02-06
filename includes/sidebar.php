@@ -119,6 +119,13 @@
                     <i class="fas fa-box-open"></i> <span class="link-text">SCORM Packages</span>
                 </a>
             </li>
+            <li>
+                <a href="<?php echo isset($path_to_root) ? $path_to_root : ''; ?>my_profile.php"
+                   title="My Profile"
+                    class="<?php echo basename($_SERVER['PHP_SELF']) == 'my_profile.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-user"></i> <span class="link-text">My Profile</span>
+                </a>
+            </li>
         <?php endif; ?>
     </ul>
 
