@@ -1,5 +1,6 @@
 <?php
 require_once 'config.php';
+// Deployment Sync: 2026-02-06
 require_once 'functions.php';
 require_once 'auth_check.php';
 
