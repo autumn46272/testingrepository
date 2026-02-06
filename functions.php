@@ -275,7 +275,7 @@ function log_activity($user_id, $action, $table_name, $record_id, $details = '')
  * @param string $user_type User type (default: "Academic Assistant")
  * @return array Array with 'success' (bool), 'username', 'password' (plain), and 'message'
  */
-function create_user_for_student($pdo, $student_id, $first_name, $last_name, $user_type = 'Student') {
+function create_user_for_student($pdo, $student_id, $first_name, $last_name, $email = null, $user_type = 'Student') {
     try {
         // Use student ID as username
         $username = $student_id;
@@ -285,12 +285,13 @@ function create_user_for_student($pdo, $student_id, $first_name, $last_name, $us
         $password_hash = password_hash($plain_password, PASSWORD_DEFAULT);
         
         // Insert user into database with 'student' role (system checks role for access control)
-        $stmt = $pdo->prepare("INSERT INTO users (username, password_hash, first_name, last_name, role, user_type) VALUES (:user, :pass, :fname, :lname, 'student', :type)");
+        $stmt = $pdo->prepare("INSERT INTO users (username, password_hash, first_name, last_name, email, role, user_type) VALUES (:user, :pass, :fname, :lname, :email, 'student', :type)");
         $stmt->execute([
             'user' => $username,
             'pass' => $password_hash,
             'fname' => $first_name,
             'lname' => $last_name,
+            'email' => $email,
             'type' => $user_type
         ]);
         
@@ -322,4 +323,3 @@ function create_user_for_student($pdo, $student_id, $first_name, $last_name, $us
         }
     }
 }
-?>

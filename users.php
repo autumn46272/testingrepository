@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['create_user'])) {
     $password = clean_input($_POST['password']);
     $first_name = clean_input($_POST['first_name']);
     $last_name = clean_input($_POST['last_name']);
+    $email = clean_input($_POST['email']);
     $user_type = clean_input($_POST['user_type']);
 
     if (empty($username) || empty($password) || empty($first_name) || empty($user_type)) {
@@ -22,12 +23,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['create_user'])) {
 
         try {
             // Always set role to 'student' (user_type still differentiates permissions)
-            $stmt = $pdo->prepare("INSERT INTO users (username, password_hash, first_name, last_name, role, user_type) VALUES (:user, :pass, :fname, :lname, 'student', :type)");
+            $stmt = $pdo->prepare("INSERT INTO users (username, password_hash, first_name, last_name, email, role, user_type) VALUES (:user, :pass, :fname, :lname, :email, 'student', :type)");
             $stmt->execute([
                 'user' => $username,
                 'pass' => $pass_hash,
                 'fname' => $first_name,
                 'lname' => $last_name,
+                'email' => $email,
                 'type' => $user_type
             ]);
             $success = "User created successfully!";
@@ -62,6 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_user'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
     $uid = clean_input($_POST['user_id']);
     $user_type = clean_input($_POST['user_type']);
+    $email = clean_input($_POST['email']);
     $password = clean_input($_POST['password']);
 
     if (empty($user_type)) {
@@ -70,11 +73,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
         try {
             if (!empty($password)) {
                 $pass_hash = password_hash($password, PASSWORD_DEFAULT);
-                $stmt = $pdo->prepare("UPDATE users SET user_type = :type, password_hash = :pass WHERE id = :id");
-                $stmt->execute(['type' => $user_type, 'pass' => $pass_hash, 'id' => $uid]);
+                $stmt = $pdo->prepare("UPDATE users SET user_type = :type, email = :email, password_hash = :pass WHERE id = :id");
+                $stmt->execute(['type' => $user_type, 'email' => $email, 'pass' => $pass_hash, 'id' => $uid]);
             } else {
-                $stmt = $pdo->prepare("UPDATE users SET user_type = :type WHERE id = :id");
-                $stmt->execute(['type' => $user_type, 'id' => $uid]);
+                $stmt = $pdo->prepare("UPDATE users SET user_type = :type, email = :email WHERE id = :id");
+                $stmt->execute(['type' => $user_type, 'email' => $email, 'id' => $uid]);
             }
             $success = "User updated successfully!";
         } catch (PDOException $e) {
@@ -192,6 +195,7 @@ require_once 'includes/sidebar.php';
                 <tr>
                     <th>Username</th>
                     <th>Name</th>
+                    <th>Email</th>
                     <th>User Type</th>
                     <th>Status</th>
                     <th>Created At</th>
@@ -206,6 +210,9 @@ require_once 'includes/sidebar.php';
                         </td>
                         <td>
                             <?php echo htmlspecialchars($u['first_name'] . ' ' . $u['last_name']); ?>
+                        </td>
+                        <td>
+                            <?php echo htmlspecialchars($u['email']); ?>
                         </td>
                         <td>
                             <span class="badge" style="background: #f3f4f6; color: #4b5563;">
@@ -288,6 +295,10 @@ require_once 'includes/sidebar.php';
                 </div>
             </div>
             <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control">
+            </div>
+            <div class="form-group">
                 <label class="form-label">User Type <span class="text-danger">*</span></label>
                 <select name="user_type" class="form-control" required>
                     <?php foreach ($user_types as $type): ?>
@@ -320,6 +331,11 @@ require_once 'includes/sidebar.php';
                 <label class="form-label">Username</label>
                 <input type="text" id="edit_username" class="form-control" disabled style="background: #f3f4f6;">
             </div>
+            
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" id="edit_email" class="form-control">
+            </div>
 
             <div class="form-group">
                 <label class="form-label">User Type <span class="text-danger">*</span></label>
@@ -350,6 +366,7 @@ require_once 'includes/sidebar.php';
     function openEditUserModal(user) {
         document.getElementById('edit_user_id').value = user.id;
         document.getElementById('edit_username').value = user.username;
+        document.getElementById('edit_email').value = user.email;
         document.getElementById('edit_user_type').value = user.user_type || 'Admin';
         document.getElementById('editUserModal').style.display = 'block';
     }

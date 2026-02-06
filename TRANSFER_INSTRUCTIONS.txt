@@ -1,0 +1,27 @@
+HOW TO UPLOAD THIS PROJECT TO A SEPARATE REPOSITORY
+
+If you give this project folder to someone else and they want to upload it to their own GitHub repository, follow these steps:
+
+1. Prerequisite: Install Git
+   - Download from: https://git-scm.com/downloads
+   - Install with default settings.
+   - Typically installed at: C:\Program Files\Git\cmd\git.exe
+
+2. Open Terminal in Project Folder
+   - Right-click the folder > "Open in Terminal" or use Command Prompt.
+
+3. Remove the Old Repository Link
+   Type this command and press Enter:
+   git remote remove origin
+
+4. Create a New Repository on GitHub
+   - Go to github.com and create a new empty repository.
+   - Copy the HTTPS URL (e.g., https://github.com/USERNAME/REPO-NAME.git).
+
+5. Link to the New Repository
+   Type this command (replace with your URL):
+   git remote add origin https://github.com/YOUR-USERNAME/YOUR-NEW-REPO.git
+
+6. Upload the Code
+   Type this command:
+   git push -u origin main

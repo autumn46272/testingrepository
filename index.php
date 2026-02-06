@@ -21,25 +21,65 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($username) || empty($password)) {
         $error = "Please enter both username and password.";
     } else {
-        $stmt = $pdo->prepare("SELECT id, username, password_hash, first_name, last_name, role, user_type FROM users WHERE username = :username AND status = 'active'");
+        // Fetch user with secret and email
+        $stmt = $pdo->prepare("SELECT id, username, password_hash, first_name, last_name, role, user_type, email, two_factor_secret FROM users WHERE username = :username AND status = 'active'");
         $stmt->execute(['username' => $username]);
 
         if ($stmt->rowCount() == 1) {
             $user = $stmt->fetch();
             if (password_verify($password, $user['password_hash'])) {
-                // Password is correct, start session
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['first_name'] = $user['first_name'];
-                $_SESSION['last_name'] = $user['last_name'];
-                $_SESSION['role'] = $user['role'];
-                $_SESSION['user_type'] = $user['user_type']; // Store user_type for future use
+                
+                // 1. Check for TOTP (Google Authenticator)
+                if (!empty($user['two_factor_secret'])) {
+                    // Redirect to verification (TOTP mode)
+                    $_SESSION['temp_user_id'] = $user['id'];
+                    $_SESSION['2fa_mode'] = 'totp'; // Flag for verify page
+                    redirect('verify_2fa.php');
+                } 
+                // 2. Fallback to Email 2FA
+                elseif (!empty($user['email'])) {
+                    // Generate Code
+                    $code = rand(100000, 999999);
+                    $expires = date('Y-m-d H:i:s', strtotime('+10 minutes'));
 
-                // Redirect based on role
-                if ($user['role'] === 'student') {
-                    redirect('student_dashboard.php');
-                } else {
-                    redirect('dashboard.php');
+                    // Store code
+                    $update = $pdo->prepare("UPDATE users SET two_factor_code = :code, two_factor_expires_at = :expires WHERE id = :id");
+                    $update->execute([
+                        'code' => $code,
+                        'expires' => $expires,
+                        'id' => $user['id']
+                    ]);
+
+                    // Send Email
+                    $to = $user['email'];
+                    $subject = "Your Login Verification Code";
+                    $message = "Your verification code is: " . $code . "\n\nThis code expires in 10 minutes.";
+                    $headers = "From: no-reply@studentdb.com";
+
+                    // Use @ to suppress errors if mail server not configured
+                    @mail($to, $subject, $message, $headers);
+
+                    // Redirect to verification (Email mode)
+                    $_SESSION['temp_user_id'] = $user['id'];
+                    $_SESSION['2fa_mode'] = 'email';
+                    redirect('verify_2fa.php');
+
+                } 
+                // 3. No 2FA - Direct Login
+                else {
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['username'] = $user['username'];
+                    $_SESSION['first_name'] = $user['first_name'];
+                    $_SESSION['last_name'] = $user['last_name'];
+                    $_SESSION['role'] = $user['role'];
+                    $_SESSION['user_type'] = $user['user_type'];
+
+                    // Redirect based on role
+                    if ($user['role'] === 'student') {
+                        redirect('student_dashboard.php');
+                    } else {
+                        redirect('dashboard.php');
+                    }
                 }
             } else {
                 $error = "Invalid username or password.";
