@@ -41,7 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contact_number = clean_input($_POST['contact_number']);
     $birthdate = !empty($_POST['birthdate']) ? $_POST['birthdate'] : NULL;
     $city = clean_input($_POST['city']);
+    $city = clean_input($_POST['city']);
     $country = clean_input($_POST['country']);
+    $school = clean_input($_POST['school']);
+    $prev_review_center = clean_input($_POST['prev_review_center']);
     
     // Auto-generate Student ID based on branch
     $student_id = generate_branch_student_id($pdo, $branch);
@@ -80,8 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Please fill in all required fields.";
     } elseif (empty($error)) {
         try {
-            $sql = "INSERT INTO students (student_id, first_name, last_name, gender, group_id, status, email, contact_number, birthdate, city, country, branch, profile_image) 
-                    VALUES (:student_id, :first_name, :last_name, :gender, :group_id, :status, :email, :contact_number, :birthdate, :city, :country, :branch, :profile_image)";
+            $sql = "INSERT INTO students (student_id, first_name, last_name, gender, group_id, status, email, contact_number, birthdate, city, country, branch, profile_image, school, prev_review_center) 
+                    VALUES (:student_id, :first_name, :last_name, :gender, :group_id, :status, :email, :contact_number, :birthdate, :city, :country, :branch, :profile_image, :school, :prev_review_center)";
 
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
@@ -97,7 +100,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ':city' => $city,
                 ':country' => $country,
                 ':branch' => $branch,
-                ':profile_image' => $profile_image
+                ':profile_image' => $profile_image,
+                ':school' => $school,
+                ':prev_review_center' => $prev_review_center
             ]);
 
             // Create user account for the student
@@ -215,6 +220,19 @@ require_once 'includes/sidebar.php';
                 <label class="form-label">Country</label>
                 <input type="text" name="country" class="form-control"
                     value="<?php echo isset($_POST['country']) ? htmlspecialchars($_POST['country']) : ''; ?>">
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+             <div class="form-group">
+                <label class="form-label">School</label>
+                <input type="text" name="school" class="form-control"
+                    value="<?php echo isset($_POST['school']) ? htmlspecialchars($_POST['school']) : ''; ?>">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Previous Review Center</label>
+                <input type="text" name="prev_review_center" class="form-control"
+                    value="<?php echo isset($_POST['prev_review_center']) ? htmlspecialchars($_POST['prev_review_center']) : ''; ?>">
             </div>
         </div>
 
