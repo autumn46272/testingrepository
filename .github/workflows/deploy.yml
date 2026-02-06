@@ -1,0 +1,32 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main  # Triggers deployment when you push to main branch
+
+jobs:
+  deploy:
+    name: Deploy to Hostinger via FTP
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Deploy to Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /public_html/student-db-system/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/uploads/**
+            **/.gitignore
+            **/.github/**
+            **/config.php
+            **/*.sql

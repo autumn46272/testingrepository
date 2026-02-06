@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Uploads and user-generated content
+uploads/*
+!uploads/.gitkeep
+
+# Configuration files (may contain sensitive data)
+config.php
+
+# Database files
+*.sql
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest identifier="n34W7vIQEnbqT" xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lom="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+	<metadata>
+		<schema>ADL SCORM</schema>
+		<schemaversion>1.2</schemaversion>
+		<lom:lom>
+			<lom:general>
+				<lom:title>
+					<lom:langstring>POST-TEST (21-DAY) MCN</lom:langstring>
+				</lom:title>
+			</lom:general>
+			<lom:educational>
+				<lom:typicallearningtime>
+				<lom:datetime>01:00:00</lom:datetime>
+				</lom:typicallearningtime>
+			</lom:educational>
+		</lom:lom>
+	</metadata>
+	<organizations default="post-test_(21-day)_mcn_organization">
+		<organization identifier="post-test_(21-day)_mcn_organization">
+
+			<title>POST-TEST (21-DAY) MCN</title>
+			<item identifier="C289EC9F-3594-4D1F-95B5-CF64DAE622F1" identifierref="resource">
+				<title>POST-TEST (21-DAY) MCN</title>
+			</item>
+		</organization>
+	</organizations>
+	<resources>
+		<resource identifier="resource" type="webcontent" adlcp:scormtype="sco" href="res/index.html">
+			<file href="res/data/apple-touch-icon.png"/>
+<file href="res/data/browsersupport.js"/>
+<file href="res/data/favicon.ico"/>
+<file href="res/data/fonts/fnt0.woff"/>
+<file href="res/data/fonts/fnt1.woff"/>
+<file href="res/data/fonts/fnt2.woff"/>
+<file href="res/data/fonts/fnt3.woff"/>
+<file href="res/data/fonts/fnt4.woff"/>
+<file href="res/data/goodbye.html"/>
+<file href="res/data/html5-unsupported.html"/>
+<file href="res/data/images/15c6-1498-afd1-4665.png"/>
+<file href="res/data/images/img-2641d4427e6e02a82940ed07c1ea55abce9b7f8d.png"/>
+<file href="res/data/images/img-474c9184105748d56edfcbe3c7d70135d19f98d6.png"/>
+<file href="res/data/images/img-a0311d9b87f54074a1d8e46c527eca7c42964ff3.png"/>
+<file href="res/data/images/img-c3a316f1fb70ee5ae1c3b19ed43e8637a6c4c31c.png"/>
+<file href="res/data/images/img-c5c2e0d86a47aeb156aec77aec87ff0912b510c7.png"/>
+<file href="res/data/lms.js"/>
+<file href="res/data/player.js"/>
+<file href="res/index.html"/>
+
+		</resource>
+	</resources>
+</manifest>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest identifier="PW2b3jL0MNecZ" xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lom="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+	<metadata>
+		<schema>ADL SCORM</schema>
+		<schemaversion>1.2</schemaversion>
+		<lom:lom>
+			<lom:general>
+				<lom:title>
+					<lom:langstring>PRE-TEST (21 DAY)  MATERNAL</lom:langstring>
+				</lom:title>
+			</lom:general>
+			<lom:educational>
+				<lom:typicallearningtime>
+				<lom:datetime>01:00:00</lom:datetime>
+				</lom:typicallearningtime>
+			</lom:educational>
+		</lom:lom>
+	</metadata>
+	<organizations default="pre-test_(21_day)__maternal_organization">
+		<organization identifier="pre-test_(21_day)__maternal_organization">
+
+			<title>PRE-TEST (21 DAY)  MATERNAL</title>
+			<item identifier="DC0299A7-9DF5-4FB6-A69A-ACD7829A8839" identifierref="resource">
+				<title>PRE-TEST (21 DAY): MATERNAL</title>
+			</item>
+		</organization>
+	</organizations>
+	<resources>
+		<resource identifier="resource" type="webcontent" adlcp:scormtype="sco" href="res/index.html">
+			<file href="res/data/apple-touch-icon.png"/>
+<file href="res/data/browsersupport.js"/>
+<file href="res/data/favicon.ico"/>
+<file href="res/data/fonts/fnt0.woff"/>
+<file href="res/data/fonts/fnt1.woff"/>
+<file href="res/data/fonts/fnt2.woff"/>
+<file href="res/data/goodbye.html"/>
+<file href="res/data/html5-unsupported.html"/>
+<file href="res/data/images/dd2b-b630-9014-d1ef.png"/>
+<file href="res/data/images/img-7ecb1af1f786087a2a4eb33de953f33b60c0edaf.png"/>
+<file href="res/data/images/img-987b834df727ebea1ea1a0f0b1d30eb7f9c06c86.jpg"/>
+<file href="res/data/images/img-99a05b6b3c3e44a91cdc92e412aa2ad98c9f8085.jpg"/>
+<file href="res/data/images/img-ad95f7cd70ff7367af07005f7ca411f6d82eb58a.jpg"/>
+<file href="res/data/images/img-f32a81dc037f9cf5067de6f7bb87d8f185357df1.jpg"/>
+<file href="res/data/lms.js"/>
+<file href="res/data/player.js"/>
+<file href="res/index.html"/>
+
+		</resource>
+	</resources>
+</manifest>
